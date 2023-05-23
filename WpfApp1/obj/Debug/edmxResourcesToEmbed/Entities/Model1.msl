@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище GYMModelContainer" CdmEntityContainer="GYMEntities8">
+    <EntitySetMapping Name="list_of_exercise">
+      <EntityTypeMapping TypeName="GYMModel.list_of_exercise">
+        <MappingFragment StoreEntitySet="list_of_exercise">
+          <ScalarProperty Name="id_exercise" ColumnName="id_exercise" />
+          <ScalarProperty Name="id_client" ColumnName="id_client" />
+          <ScalarProperty Name="name_exercise" ColumnName="name_exercise" />
+          <ScalarProperty Name="weight" ColumnName="weight" />
+          <ScalarProperty Name="repetition" ColumnName="repetition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="roles">
+      <EntityTypeMapping TypeName="GYMModel.role">
+        <MappingFragment StoreEntitySet="role">
+          <ScalarProperty Name="id_role" ColumnName="id_role" />
+          <ScalarProperty Name="name_role" ColumnName="name_role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="subscriptions">
+      <EntityTypeMapping TypeName="GYMModel.subscription">
+        <MappingFragment StoreEntitySet="subscription">
+          <ScalarProperty Name="id_subscription" ColumnName="id_subscription" />
+          <ScalarProperty Name="discription_subscription" ColumnName="discription_subscription" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="time_start" ColumnName="time_start" />
+          <ScalarProperty Name="time_end" ColumnName="time_end" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="subscriptionClients">
+      <EntityTypeMapping TypeName="GYMModel.subscriptionClient">
+        <MappingFragment StoreEntitySet="subscriptionClient">
+          <ScalarProperty Name="id_purchase" ColumnName="id_purchase" />
+          <ScalarProperty Name="id_client" ColumnName="id_client" />
+          <ScalarProperty Name="id_subscription" ColumnName="id_subscription" />
+          <ScalarProperty Name="date_purchase" ColumnName="date_purchase" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="GYMModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="treners">
+      <EntityTypeMapping TypeName="GYMModel.trener">
+        <MappingFragment StoreEntitySet="trener">
+          <ScalarProperty Name="id_trener" ColumnName="id_trener" />
+          <ScalarProperty Name="discription" ColumnName="discription" />
+          <ScalarProperty Name="experience" ColumnName="experience" />
+          <ScalarProperty Name="trenerImage" ColumnName="trenerImage" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="firstname" ColumnName="firstname" />
+          <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="GYMModel.user">
+        <MappingFragment StoreEntitySet="user">
+          <ScalarProperty Name="id_user" ColumnName="id_user" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="firstname" ColumnName="firstname" />
+          <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+          <ScalarProperty Name="height" ColumnName="height" />
+          <ScalarProperty Name="weight" ColumnName="weight" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="userImage" ColumnName="userImage" />
+          <ScalarProperty Name="role" ColumnName="role" />
+          <ScalarProperty Name="trener" ColumnName="trener" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="visit_log">
+      <EntityTypeMapping TypeName="GYMModel.visit_log">
+        <MappingFragment StoreEntitySet="visit_log">
+          <ScalarProperty Name="id_visit" ColumnName="id_visit" />
+          <ScalarProperty Name="id_client" ColumnName="id_client" />
+          <ScalarProperty Name="date_visit" ColumnName="date_visit" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

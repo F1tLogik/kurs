@@ -1,0 +1,38 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Спортзальчик" Height="480" Width="900" MinWidth="900" MinHeight="480" MaxHeight="480" MaxWidth="900" >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150px"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50px"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Column="0" Grid.Row="0" Background="#1959d1"/>
+        <Grid Grid.Column="0" Grid.Row="1" Background="#1959d1">
+            <Button Name="BtnBack" Click="BtnBack_Click" Content="Назад" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource ButtonBack}"/>
+            <Image Source="Assets\logo-gym.png" Width="90px" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10px  "></Image>
+            <Line X1="5" Y1="00" X2="145" Y2="00" Stroke="#FFD700"/>
+            
+           
+            
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ElementName=FrameMain, Path=Content.Title}" FontSize="24" FontFamily="Century Gothic" FontWeight="Light"/>
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="0">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="27" FontFamily="Century Gothic" Text="STRONGER" FontWeight="Light"/>
+        </Grid>
+
+        <Frame x:Name="FrameMain" NavigationUIVisibility="Hidden" Grid.Column="1" Grid.Row="1"></Frame>
+
+    </Grid>
+</Window>

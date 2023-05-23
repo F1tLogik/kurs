@@ -1,0 +1,59 @@
+﻿<Page x:Class="WpfApp1.Pages.Staff"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfApp1.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Сотрудники" Loaded="Page_Loaded">
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <ListView Grid.Column="1" Grid.Row="0" Name="LViewStaff" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Padding="5" CornerRadius="10" Background="#11111144">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Source="{Binding userImage}" Width="80"/>
+                            <StackPanel Orientation="Vertical" Grid.Column="1" Width="350">
+                                <StackPanel Orientation="Horizontal" Margin=" 0 0 0 10" HorizontalAlignment="Center">
+                                    <TextBlock Width="auto" FontSize="20" Text="{Binding surname}"/>
+                                    <TextBlock Width="auto" FontSize="20" Text="{Binding firstname}"/>
+                                    <TextBlock Width="auto" FontSize="20" Text="{Binding patronymic}"/>
+                                </StackPanel>
+                                <TextBlock Width="auto" FontSize="14" Name="TBlockRole" Margin=" 5 0 0 10"/>
+
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Name="ButtonEdit" Click="ButtonEdit_Click" Style="{StaticResource ButtonEditDel}" Visibility="{Binding StaffControlsVisibility}">
+                                        <Image Source="/Assets/edit.png" Width="20" Height="20" />
+                                    </Button>
+                                    <Button Name="ButtonDelete" Click="ButtonDelete_Click" Style="{StaticResource ButtonEditDel}" Visibility="{Binding StaffControlsVisibility}">
+                                        <Image Source="/Assets/del.png" Width="20" Height="20" />
+                                    </Button>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Content="Добавить" Name="ButtonAdd" Click="ButtonAdd_Click" Style="{StaticResource ButtonYellow}"/>
+        </StackPanel>
+    </Grid>
+</Page>

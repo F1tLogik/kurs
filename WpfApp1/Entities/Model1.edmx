@@ -1,0 +1,520 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище GYMModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="list_of_exercise">
+          <Key>
+            <PropertyRef Name="id_exercise" />
+          </Key>
+          <Property Name="id_exercise" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_client" Type="int" />
+          <Property Name="name_exercise" Type="nvarchar" MaxLength="50" />
+          <Property Name="weight" Type="int" />
+          <Property Name="repetition" Type="int" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="id_role" />
+          </Key>
+          <Property Name="id_role" Type="int" Nullable="false" />
+          <Property Name="name_role" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="subscription">
+          <Key>
+            <PropertyRef Name="id_subscription" />
+          </Key>
+          <Property Name="id_subscription" Type="int" Nullable="false" />
+          <Property Name="discription_subscription" Type="nvarchar(max)" />
+          <Property Name="price" Type="money" />
+          <Property Name="time_start" Type="time" Precision="2" />
+          <Property Name="time_end" Type="time" Precision="2" />
+        </EntityType>
+        <EntityType Name="subscriptionClient">
+          <Key>
+            <PropertyRef Name="id_purchase" />
+          </Key>
+          <Property Name="id_purchase" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_client" Type="int" />
+          <Property Name="id_subscription" Type="int" />
+          <Property Name="date_purchase" Type="date" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="trener">
+          <Key>
+            <PropertyRef Name="id_trener" />
+          </Key>
+          <Property Name="id_trener" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="discription" Type="nvarchar(max)" />
+          <Property Name="experience" Type="nvarchar" MaxLength="50" />
+          <Property Name="trenerImage" Type="varbinary(max)" />
+          <Property Name="surname" Type="nvarchar" MaxLength="50" />
+          <Property Name="firstname" Type="nvarchar" MaxLength="50" />
+          <Property Name="patronymic" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="firstname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="patronymic" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="phone_number" Type="nchar" MaxLength="11" />
+          <Property Name="height" Type="int" />
+          <Property Name="weight" Type="float" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="userImage" Type="varbinary(max)" />
+          <Property Name="role" Type="int" />
+          <Property Name="trener" Type="int" />
+        </EntityType>
+        <EntityType Name="visit_log">
+          <Key>
+            <PropertyRef Name="id_visit" />
+          </Key>
+          <Property Name="id_visit" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_client" Type="int" />
+          <Property Name="date_visit" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_client_role">
+          <End Role="role" Type="Self.role" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="id_role" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_list_of_exercises_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="list_of_exercise" Type="Self.list_of_exercise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="list_of_exercise">
+              <PropertyRef Name="id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_subscriptionClient_client">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="subscriptionClient" Type="Self.subscriptionClient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="subscriptionClient">
+              <PropertyRef Name="id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_subscriptionClient_subscription">
+          <End Role="subscription" Type="Self.subscription" Multiplicity="0..1" />
+          <End Role="subscriptionClient" Type="Self.subscriptionClient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subscription">
+              <PropertyRef Name="id_subscription" />
+            </Principal>
+            <Dependent Role="subscriptionClient">
+              <PropertyRef Name="id_subscription" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_trener">
+          <End Role="trener" Type="Self.trener" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="trener">
+              <PropertyRef Name="id_trener" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="trener" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_visit_log_client">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="visit_log" Type="Self.visit_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="visit_log">
+              <PropertyRef Name="id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище GYMModelContainer">
+          <EntitySet Name="list_of_exercise" EntityType="Self.list_of_exercise" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="subscription" EntityType="Self.subscription" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="subscriptionClient" EntityType="Self.subscriptionClient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="trener" EntityType="Self.trener" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="visit_log" EntityType="Self.visit_log" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_client_role" Association="Self.FK_client_role">
+            <End Role="role" EntitySet="role" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_list_of_exercises_user" Association="Self.FK_list_of_exercises_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="list_of_exercise" EntitySet="list_of_exercise" />
+          </AssociationSet>
+          <AssociationSet Name="FK_subscriptionClient_client" Association="Self.FK_subscriptionClient_client">
+            <End Role="user" EntitySet="user" />
+            <End Role="subscriptionClient" EntitySet="subscriptionClient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_subscriptionClient_subscription" Association="Self.FK_subscriptionClient_subscription">
+            <End Role="subscription" EntitySet="subscription" />
+            <End Role="subscriptionClient" EntitySet="subscriptionClient" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_trener" Association="Self.FK_user_trener">
+            <End Role="trener" EntitySet="trener" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_visit_log_client" Association="Self.FK_visit_log_client">
+            <End Role="user" EntitySet="user" />
+            <End Role="visit_log" EntitySet="visit_log" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GYMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="list_of_exercise">
+          <Key>
+            <PropertyRef Name="id_exercise" />
+          </Key>
+          <Property Name="id_exercise" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_client" Type="Int32" />
+          <Property Name="name_exercise" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="weight" Type="Int32" />
+          <Property Name="repetition" Type="Int32" />
+          <NavigationProperty Name="user" Relationship="Self.FK_list_of_exercises_user" FromRole="list_of_exercise" ToRole="user" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="id_role" />
+          </Key>
+          <Property Name="id_role" Type="Int32" Nullable="false" />
+          <Property Name="name_role" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="users" Relationship="Self.FK_client_role" FromRole="role" ToRole="user" />
+        </EntityType>
+        <EntityType Name="subscription">
+          <Key>
+            <PropertyRef Name="id_subscription" />
+          </Key>
+          <Property Name="id_subscription" Type="Int32" Nullable="false" />
+          <Property Name="discription_subscription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="time_start" Type="Time" Precision="2" />
+          <Property Name="time_end" Type="Time" Precision="2" />
+          <NavigationProperty Name="subscriptionClients" Relationship="Self.FK_subscriptionClient_subscription" FromRole="subscription" ToRole="subscriptionClient" />
+        </EntityType>
+        <EntityType Name="subscriptionClient">
+          <Key>
+            <PropertyRef Name="id_purchase" />
+          </Key>
+          <Property Name="id_purchase" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_client" Type="Int32" />
+          <Property Name="id_subscription" Type="Int32" />
+          <Property Name="date_purchase" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="subscription" Relationship="Self.FK_subscriptionClient_subscription" FromRole="subscriptionClient" ToRole="subscription" />
+          <NavigationProperty Name="user" Relationship="Self.FK_subscriptionClient_client" FromRole="subscriptionClient" ToRole="user" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="trener">
+          <Key>
+            <PropertyRef Name="id_trener" />
+          </Key>
+          <Property Name="id_trener" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="discription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="experience" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="trenerImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="users" Relationship="Self.FK_user_trener" FromRole="trener" ToRole="user" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phone_number" Type="String" MaxLength="11" FixedLength="true" Unicode="true" />
+          <Property Name="height" Type="Int32" />
+          <Property Name="weight" Type="Double" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="userImage" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="role" Type="Int32" />
+          <Property Name="trener" Type="Int32" />
+          <NavigationProperty Name="list_of_exercise" Relationship="Self.FK_list_of_exercises_user" FromRole="user" ToRole="list_of_exercise" />
+          <NavigationProperty Name="role1" Relationship="Self.FK_client_role" FromRole="user" ToRole="role" />
+          <NavigationProperty Name="subscriptionClients" Relationship="Self.FK_subscriptionClient_client" FromRole="user" ToRole="subscriptionClient" />
+          <NavigationProperty Name="trener1" Relationship="Self.FK_user_trener" FromRole="user" ToRole="trener" />
+          <NavigationProperty Name="visit_log" Relationship="Self.FK_visit_log_client" FromRole="user" ToRole="visit_log" />
+        </EntityType>
+        <EntityType Name="visit_log">
+          <Key>
+            <PropertyRef Name="id_visit" />
+          </Key>
+          <Property Name="id_visit" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_client" Type="Int32" />
+          <Property Name="date_visit" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="user" Relationship="Self.FK_visit_log_client" FromRole="visit_log" ToRole="user" />
+        </EntityType>
+        <Association Name="FK_list_of_exercises_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="list_of_exercise" Type="Self.list_of_exercise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="list_of_exercise">
+              <PropertyRef Name="id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_client_role">
+          <End Role="role" Type="Self.role" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="id_role" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_subscriptionClient_subscription">
+          <End Role="subscription" Type="Self.subscription" Multiplicity="0..1" />
+          <End Role="subscriptionClient" Type="Self.subscriptionClient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="subscription">
+              <PropertyRef Name="id_subscription" />
+            </Principal>
+            <Dependent Role="subscriptionClient">
+              <PropertyRef Name="id_subscription" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_subscriptionClient_client">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="subscriptionClient" Type="Self.subscriptionClient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="subscriptionClient">
+              <PropertyRef Name="id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_trener">
+          <End Role="trener" Type="Self.trener" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="trener">
+              <PropertyRef Name="id_trener" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="trener" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_visit_log_client">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="visit_log" Type="Self.visit_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="visit_log">
+              <PropertyRef Name="id_client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GYMEntities8" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="list_of_exercise" EntityType="Self.list_of_exercise" />
+          <EntitySet Name="roles" EntityType="Self.role" />
+          <EntitySet Name="subscriptions" EntityType="Self.subscription" />
+          <EntitySet Name="subscriptionClients" EntityType="Self.subscriptionClient" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="treners" EntityType="Self.trener" />
+          <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="visit_log" EntityType="Self.visit_log" />
+          <AssociationSet Name="FK_list_of_exercises_user" Association="Self.FK_list_of_exercises_user">
+            <End Role="user" EntitySet="users" />
+            <End Role="list_of_exercise" EntitySet="list_of_exercise" />
+          </AssociationSet>
+          <AssociationSet Name="FK_client_role" Association="Self.FK_client_role">
+            <End Role="role" EntitySet="roles" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_subscriptionClient_subscription" Association="Self.FK_subscriptionClient_subscription">
+            <End Role="subscription" EntitySet="subscriptions" />
+            <End Role="subscriptionClient" EntitySet="subscriptionClients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_subscriptionClient_client" Association="Self.FK_subscriptionClient_client">
+            <End Role="user" EntitySet="users" />
+            <End Role="subscriptionClient" EntitySet="subscriptionClients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_trener" Association="Self.FK_user_trener">
+            <End Role="trener" EntitySet="treners" />
+            <End Role="user" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_visit_log_client" Association="Self.FK_visit_log_client">
+            <End Role="user" EntitySet="users" />
+            <End Role="visit_log" EntitySet="visit_log" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище GYMModelContainer" CdmEntityContainer="GYMEntities8">
+          <EntitySetMapping Name="list_of_exercise">
+            <EntityTypeMapping TypeName="GYMModel.list_of_exercise">
+              <MappingFragment StoreEntitySet="list_of_exercise">
+                <ScalarProperty Name="id_exercise" ColumnName="id_exercise" />
+                <ScalarProperty Name="id_client" ColumnName="id_client" />
+                <ScalarProperty Name="name_exercise" ColumnName="name_exercise" />
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="repetition" ColumnName="repetition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="roles">
+            <EntityTypeMapping TypeName="GYMModel.role">
+              <MappingFragment StoreEntitySet="role">
+                <ScalarProperty Name="id_role" ColumnName="id_role" />
+                <ScalarProperty Name="name_role" ColumnName="name_role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="subscriptions">
+            <EntityTypeMapping TypeName="GYMModel.subscription">
+              <MappingFragment StoreEntitySet="subscription">
+                <ScalarProperty Name="id_subscription" ColumnName="id_subscription" />
+                <ScalarProperty Name="discription_subscription" ColumnName="discription_subscription" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="time_start" ColumnName="time_start" />
+                <ScalarProperty Name="time_end" ColumnName="time_end" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="subscriptionClients">
+            <EntityTypeMapping TypeName="GYMModel.subscriptionClient">
+              <MappingFragment StoreEntitySet="subscriptionClient">
+                <ScalarProperty Name="id_purchase" ColumnName="id_purchase" />
+                <ScalarProperty Name="id_client" ColumnName="id_client" />
+                <ScalarProperty Name="id_subscription" ColumnName="id_subscription" />
+                <ScalarProperty Name="date_purchase" ColumnName="date_purchase" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="GYMModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="treners">
+            <EntityTypeMapping TypeName="GYMModel.trener">
+              <MappingFragment StoreEntitySet="trener">
+                <ScalarProperty Name="id_trener" ColumnName="id_trener" />
+                <ScalarProperty Name="discription" ColumnName="discription" />
+                <ScalarProperty Name="experience" ColumnName="experience" />
+                <ScalarProperty Name="trenerImage" ColumnName="trenerImage" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="GYMModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="height" ColumnName="height" />
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="userImage" ColumnName="userImage" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="trener" ColumnName="trener" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="visit_log">
+            <EntityTypeMapping TypeName="GYMModel.visit_log">
+              <MappingFragment StoreEntitySet="visit_log">
+                <ScalarProperty Name="id_visit" ColumnName="id_visit" />
+                <ScalarProperty Name="id_client" ColumnName="id_client" />
+                <ScalarProperty Name="date_visit" ColumnName="date_visit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
